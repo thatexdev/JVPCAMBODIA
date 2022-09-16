@@ -211,8 +211,6 @@ async def login(lel, message):
       await client(JoinChannelRequest('https://t.me/KhmernuddexKidd'))
       await app.send_message(message.chat.id, f"ចូលគ្រុបដោយជោគជ័យ  ✅ សូមឆែកគ្រុប ថ្មីៗក្នុងអាខោនរបស់អ្នក \n\n**រក្សារសិទ្ធដោយ @JVP_CAMBODIABOT**")
       time.sleep(2)
-      os.remove("session")
-      os.remove("session.zip")
       po+=1
       await client.disconnect()
      except ConnectionError:
