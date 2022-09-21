@@ -233,6 +233,97 @@ async def login(lel, message):
    await app.send_message(message.chat.id, f"**Error: {e}\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**")
    return
                           
+ # ------------------------------- Acc Private Adding --------------------------------- #
+@app.on_message(filters.private & filters.command(["adding"]))
+async def to(lel, message):
+ try:
+   a= await Subscribe(lel, message)
+   if a==1:
+      return
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send the From Group Username \n\nMade with ❤️ By @Timesisnotwaiting**")
+   From = number.text
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send the To Group Username \n\nMade with ❤️ By @Timesisnotwaiting**")
+   To = number.text
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send Start From  \n\nMade with ❤️ By @Timesisnotwaiting**")
+   a = int(number.text)
+   di=a
+   try:
+      with open(f"Users/{message.from_user.id}/phone.csv", 'r')as f:
+         str_list = [row[0] for row in csv.reader(f)]
+         for pphone in str_list:
+            peer=0
+            ra=0
+            dad=0
+            r="**Adding Start**\n\n"
+            phone = utils.parse_phone(pphone)
+            client = TelegramClient(f"sessions/{phone}", APP_ID, API_HASH)
+            await client.connect()
+            await client(JoinChannelRequest(To))
+            await app.send_message(chat_id=message.chat.id, text=f"**Scraping Start**")
+            async for x in client.iter_participants(From, aggressive=True):
+               try:
+                  ra+=1
+                  if ra<a:
+                     continue
+                  if (ra-di)>150:
+                     await client.disconnect()
+                     r+="**\nMade with ❤️ By @Timesisnotwaiting**"
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     await app.send_message(message.chat.id, f"**Error: {phone} Due to Some Error Moving to Next no\n\nMade with ❤️ By @Timesisnotwaiting**")
+                     break
+                  if dad>40:
+                     r+="**\nMade with ❤️ By @Timesisnotwaiting**"
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     r="**Adding Start**\n\n"
+                     dad=0
+                  await client(InviteToChannelRequest(To, [x]))
+                  status = 'DONE'
+               except errors.FloodWaitError as s:
+                  status= f'FloodWaitError for {s.seconds} sec'
+                  await client.disconnect()
+                  r+="**\nMade with ❤️ By @Timesisnotwaiting**"
+                  await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                  await app.send_message(chat_id=message.chat.id, text=f'**FloodWaitError for {s.seconds} sec\nMoving To Next Number**')
+                  break
+               except UserPrivacyRestrictedError:
+                  status = 'PrivacyRestrictedError'
+               except UserAlreadyParticipantError:
+                  status = 'ALREADY'
+               except ChatAdminRequiredError:
+                  status="To Add Admin Required"
+               except ValueError:
+                  status="Error In Entry"
+                  await client.disconnect()
+                  await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                  break
+               except PeerFloodError:
+                  if peer == 10:
+                     await client.disconnect()
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     await app.send_message(chat_id=message.chat.id, text=f"**Too Many PeerFloodError\nMoving To Next Number**")
+                     break
+                  status = 'PeerFloodError'
+                  peer+=1
+               except ChatWriteForbiddenError as cwfe:
+                  await client(JoinChannelRequest(To))
+                  continue
+               except errors.RPCError as s:
+                  status = s.__class__.__name__
+               except Exception as d:
+                  status = d
+               except:
+                  traceback.print_exc()
+                  status="Unexpected Error"
+                  break
+               r+=f"{a-di+1}). **{x.first_name}**   ⟾   **{status}**\n"
+               dad+=1
+               a+=1
+   except Exception as e:
+      await app.send_message(chat_id=message.chat.id, text=f"Error: {e} \n\n Made with ❤️ By @Timesisnotwaiting")
+ except Exception as e:
+   await app.send_message(message.chat.id, f"**Error: {e}\n\nMade with ❤️ By @Timesisnotwaiting**")
+   return
+
 
 
 
