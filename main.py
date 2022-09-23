@@ -156,7 +156,7 @@ async def login(lel, message):
             await message.reply(f"You Have Floodwait of {e.x} Seconds")
             return
          except PhoneNumberInvalidError:
-            await message.reply("អ្នកបានវាយលេខគណនីខុសហើយ.\n\nPress /ចុច​ /start ដើម្បីព្យាយាមម្ដងទៀត !")
+            await message.reply("អ្នកបានវាយលេខគណនីខុសហើយ.\n\nPress ចុច /start ដើម្បីព្យាយាមម្ដងទៀត !")
             return
          except PhoneNumberBannedError:
             await message.reply(f"{phone} is Baned")
