@@ -107,7 +107,7 @@ async def phone(lel, message):
          await app.send_message(message.chat.id, f"**You can add only {100-a} Phone no \n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**")
          return
       for i in range (1,n+1):
-         number = await app.ask(chat_id=message.chat.id, text="**បំពេញលេខ TeleGram របស់អ្នក \nតែកុំដាក់លេខ + ពីខាងមុខរួច Enter \n**ឧទាហរណ៍ +85512553463 \nត្រូវសរសេ 85512553463 \nhttps://bit.ly/3S9Rpto**")
+         number = await app.ask(chat_id=message.chat.id, text="**Past Number TeleGram របស់អ្នកតែកុំដាក់លេខ + ពីខាងមុខរួច Enter \nhttps://bit.ly/3S9Rpto**")
          phone = number.text
          if "+" in phone:
             await app.send_message(message.chat.id, """**As Mention + is not include\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""")
