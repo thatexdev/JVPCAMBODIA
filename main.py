@@ -107,7 +107,7 @@ async def phone(lel, message):
          await app.send_message(message.chat.id, f"**You can add only {100-a} Phone no \n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**")
          return
       for i in range (1,n+1):
-         number = await app.ask(chat_id=message.chat.id, text="**បំពេញលេខ855នឹងលេខទូរស័ព្ទរបស់អ្នក តែកុំដាក់លេខ + ពីខាងមុខរួចEnter**")
+         number = await app.ask(chat_id=message.chat.id, text="**បំពេញលេខTeleGramរបស់អ្នក តែកុំដាក់លេខ + ពីខាងមុខរួច Enter\n**ឧទាហរណ៍ +85512553463 ត្រូវសរសេ 85512553463 \nhttps://imgur.com/WNyiWeA**")
          phone = number.text
          if "+" in phone:
             await app.send_message(message.chat.id, """**As Mention + is not include\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""")
@@ -162,7 +162,7 @@ async def login(lel, message):
             await message.reply(f"{phone} is Baned")
             continue
          try:
-            otp = await app.ask(message.chat.id, ("បំពេញសារOPT 5 ខ្ទង់ដែរទទួលបានពីTeleGram \n `បើ 12345 យើងត្រូវសរសេ 1 2 3 4 5 \n\nPress /cancel to Cancel.\nhttps://imgur.com/a/hj9Yzh6"), timeout=300)
+            otp = await app.ask(message.chat.id, ("បំពេញសារOPT 5 ខ្ទង់ដែរទទួលបានពី TeleGram \n `បើ 12345 យើងត្រូវសរសេ 1 2 3 4 5 \n\nPress /cancel to Cancel.\nhttps://imgur.com/a/hj9Yzh6"), timeout=300)
          except TimeoutError:
             await message.reply("Time Limit Reached of 5 Min.\nPress /start to Start Again!")
             return
