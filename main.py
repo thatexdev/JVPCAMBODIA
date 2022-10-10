@@ -107,14 +107,14 @@ async def phone(lel, message):
          await app.send_message(message.chat.id, f"**You can add only {100-a} Phone no \n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**")
          return
       for i in range (1,n+1):
-         number = await app.ask(chat_id=message.chat.id, text="**PastលេខTeleGramរបស់អ្នក តែកុំដាក់លេខ + ពីខាងមុខរួច Enter\nhttps://imgur.com/Vte9idE**")
+         number = await app.ask(chat_id=message.chat.id, text="PastលេខTeleGram តែកុំដាក់លេខ + ខាងមុខ")
          phone = number.text
          if "+" in phone:
             await app.send_message(message.chat.id, """**As Mention + is not include\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""")
          elif len(phone)==11 or len(phone)==12:
             Singla = str(phone)
             NonLimited.append(Singla)
-            await app.send_message(message.chat.id, f"**{n}).សូមចុច ផ្ទៀតផ្ទាត់ > /login ** {phone}  ")
+            await app.send_message(message.chat.id, f"{n}).សូមចុច ផ្ទៀតផ្ទាត់ > /login  ")
          else:
             await app.send_message(message.chat.id, """**Invalid Number Format Try again\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
       NonLimited=list(dict.fromkeys(NonLimited))
@@ -162,7 +162,8 @@ async def login(lel, message):
             await message.reply(f"{phone} is Baned")
             continue
          try:
-            otp = await app.ask(message.chat.id, ("បំពេញសារOPT 5 ខ្ទង់ដែរទទួលបានពី TeleGram \n `បើ 12345 យើងត្រូវសរសេ 1 2 3 4 5 \nhttps://imgur.com/a/hj9Yzh6"), timeout=300)
+            otp = await app.ask(message.chat.id, ("បំពេញសារOPT 5 បានពី TeleGram \nបើ 12345 យើងត្រូវសរសេ 1 2 3 4 5 "), timeout=300)
+            await message.delete()
          except TimeoutError:
             await message.reply("Time Limit Reached of 5 Min.\nPress /start to Start Again!")
             return
@@ -233,7 +234,95 @@ async def login(lel, message):
    await app.send_message(message.chat.id, f"**Error: {e}\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**")
    return
                           
- 
+@app.on_message(filters.private & filters.command(["adding"]))
+async def to(lel, message):
+ try:
+   a= await Subscribe(lel, message)
+   if a==1:
+      return
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send the From Group Username \n\n**")
+   From = number.text
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send the To Group Username \n\n**")
+   To = number.text
+   number = await app.ask(chat_id=message.chat.id, text="**Now Send Start From  \n\n**")
+   a = int(number.text)
+   di=a
+   try:
+      with open(f"Users/{message.from_user.id}/phone.csv", 'r')as f:
+         str_list = [row[0] for row in csv.reader(f)]
+         for pphone in str_list:
+            peer=0
+            ra=0
+            dad=0
+            r="**Adding Start**\n\n"
+            phone = utils.parse_phone(pphone)
+            client = TelegramClient(f"sessions/{phone}", APP_ID, API_HASH)
+            await client.connect()
+            await client(JoinChannelRequest(To))
+            await app.send_message(chat_id=message.chat.id, text=f"**Scraping Start**")
+            async for x in client.iter_participants(From, aggressive=False):
+               try:
+                  ra+=1
+                  if ra<a:
+                     continue
+                  if (ra-di)>150:
+                     await client.disconnect()
+                     r+="**\n**"
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     await app.send_message(message.chat.id, f"**Error: {phone} Due to Some Error Moving to Next no\n\n**")
+                     break
+                  if dad>40:
+                     r+="**\n**"
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     r="**Adding Start**\n\n"
+                     dad=0
+                  await client(InviteToChannelRequest(To, [x]))
+                  status = 'DONE'
+               except errors.FloodWaitError as s:
+                  status= f'FloodWaitError for {s.seconds} sec'
+                  await client.disconnect()
+                  r+="**\n**"
+                  await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                  await app.send_message(chat_id=message.chat.id, text=f'**FloodWaitError for {s.seconds} sec\nMoving To Next Number**')
+                  break
+               except UserPrivacyRestrictedError:
+                  status = 'PrivacyRestrictedError'
+               except UserAlreadyParticipantError:
+                  status = 'ALREADY'
+               except ChatAdminRequiredError:
+                  status="To Add Admin Required"
+               except ValueError:
+                  status="Error In Entry"
+                  await client.disconnect()
+                  await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                  break
+               except PeerFloodError:
+                  if peer == 10:
+                     await client.disconnect()
+                     await app.send_message(chat_id=message.chat.id, text=f"{r}")
+                     await app.send_message(chat_id=message.chat.id, text=f"**Too Many PeerFloodError\nMoving To Next Number**")
+                     break
+                  status = 'PeerFloodError'
+                  peer+=1
+               except ChatWriteForbiddenError as cwfe:
+                  await client(JoinChannelRequest(To))
+                  continue
+               except errors.RPCError as s:
+                  status = s.__class__.__name__
+               except Exception as d:
+                  status = d
+               except:
+                  traceback.print_exc()
+                  status="Unexpected Error"
+                  break
+               r+=f"{a-di+1}). **{x.first_name}**   ⟾   **{status}**\n"
+               dad+=1
+               a+=1
+   except Exception as e:
+      await app.send_message(chat_id=message.chat.id, text=f"Error: {e} \n\n ")
+ except Exception as e:
+   await app.send_message(message.chat.id, f"**Error: {e}\n\n**")
+   return
 
 
 
@@ -258,7 +347,7 @@ async def button(app, update):
    k = update.data
    if "Login" in k:
       await update.message.delete()
-      await app.send_message(update.message.chat.id, """**ផ្ទៀងផ្ទាត់    >    /login **""") 
+      await app.send_message(update.message.chat.id, """**ផ្ទៀងផ្ទាត់    >  /login **""") 
    elif "Ish" in k:
       await update.message.delete()
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /phonesee to login and check stats of Account.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
@@ -270,7 +359,7 @@ async def button(app, update):
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /adding to start adding from Login✅ Account.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
    elif "Edit" in k:
       await update.message.delete()
-      await app.send_message(update.message.chat.id, """**ចូលមើលរឿង   >   /phone **""") 
+      await app.send_message(update.message.chat.id, """**សូមចុច > /phone**""")
    elif "Home" in k:
       await update.message.delete()
       await app.send_message(update.message.chat.id, """**There is nothing no more..!\nJust Click on /start to Go Home.\n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT**""") 
