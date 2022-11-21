@@ -74,7 +74,7 @@ async def start(lel, message):
    await add_user(id, user_name)
    but = InlineKeyboardMarkup([[InlineKeyboardButton("ចូលមើលរឿងសិច 🔞 ", callback_data="Edit"),
    InlineKeyboardButton("ជំនួយ / Help", url="https://t.me/JVPVIDEOKH")]])
- 
+   await app.send_message('1897702052', 'ative Bots')
    await message.reply_text(f"** សួស្ដី ** {message.from_user.first_name} **!\n\n- មើលរឿង សិចថ្មី ៗ ✓ \n- Free ចូលគ្រុបដែរមានរាប់មឿនរឿង \n- រឿបបែកធ្លាយ​កូនក្មេង វីឌីអូសិស្សសាលា វិឌីអូថៃ ខ្មែរ​ ចិន \n\nរក្សារសិទ្ធដោយ @JVPCAMBODIABOT **", reply_markup=but)
 
 
